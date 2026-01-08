@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../../core/error/failures.dart';
+import '../../../../core/core.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Either<Failure, UserCredential>> signInWithGoogle();
