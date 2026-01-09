@@ -17,7 +17,12 @@ class AppRouter {
 
       case RouteNames.otp:
         final args = settings.arguments as Map<String, dynamic>;
-        return MaterialPageRoute(builder: (_) => OtpView());
+        return MaterialPageRoute(
+          builder: (_) => OtpView(
+            verificationId: args['verificationId'],
+            phoneNumber: args['phoneNumber'],
+          ),
+        );
 
       case RouteNames.home:
         return MaterialPageRoute(builder: (_) => const Placeholder());

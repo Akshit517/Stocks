@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AuthIllustration extends StatelessWidget {
-  const AuthIllustration({super.key});
+  final String path;
+  const AuthIllustration({super.key, required this.path});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +11,7 @@ class AuthIllustration extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: size.height * 0.5, maxWidth: 800),
       child: SvgPicture.asset(
-        'assets/icons/illust.svg',
+        path,
         width: size.width * 0.7,
         fit: BoxFit.fitHeight,
       ),

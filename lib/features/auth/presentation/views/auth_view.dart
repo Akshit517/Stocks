@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
 import '../widgets/auth_illustration.dart';
-import '../widgets/phone_auth_button.dart';
+import '../widgets/tonal_button.dart';
 import '../widgets/text_form_field_widget.dart';
 import '../view_models/auth_view_model.dart';
 import '../widgets/divider.dart';
@@ -42,7 +42,7 @@ class _AuthViewState extends State<AuthView> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    AuthIllustration(),
+                    AuthIllustration(path: 'assets/icons/illust.svg'),
                     const SizedBox(height: 64),
                     Form(
                       key: formKey,
@@ -55,9 +55,8 @@ class _AuthViewState extends State<AuthView> {
                       ),
                     ),
                     const SizedBox(height: 20.0),
-                    PhoneAuthButton(
-                      model: model,
-                      phoneController: phoneController,
+                    TonalButton(
+                      title: "Continue",
                       onPressed: model.isBusy
                           ? null
                           : () {

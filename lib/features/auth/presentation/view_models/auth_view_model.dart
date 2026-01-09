@@ -43,4 +43,19 @@ class AuthViewModel extends BaseViewModel {
     result.mapLeft((f) => _failure = f);
     if (result.isLeft()) setIdle();
   }
+
+  Future<void> verifyOtp(
+    String verificationId,
+    String smsCode, {
+    required Function(AppUser) onSuccess,
+  }) async {
+    setLoading();
+    _failure = null;
+    final result = await _authRepository.verifyOtp(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+    result.fold((failure) => _failure = failure, (user) => onSuccess(user));
+    setIdle();
+  }
 }
