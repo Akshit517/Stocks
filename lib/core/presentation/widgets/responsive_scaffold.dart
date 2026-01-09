@@ -32,7 +32,11 @@ class ResponsiveScaffold extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: ResponsiveAppBar(title: title, theme: Theme.of(context)),
+      appBar: ResponsiveAppBar(
+        title: title,
+        theme: Theme.of(context),
+        actions: actions,
+      ),
       body: SafeArea(child: body),
     );
   }

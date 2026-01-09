@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import '../../../../core/core.dart';
 import '../../domain/auth_repository.dart';
 import '../../domain/user.dart';
@@ -64,5 +66,13 @@ class AuthViewModel extends BaseViewModel {
 
   void clearFailure() {
     _failure = null;
+  }
+
+  Future<void> signOut({required VoidCallback onSuccess}) async {
+    setLoading();
+    _failure = null;
+    final result = await _authRepository.signOut();
+    result.fold((failure) => _failure = failure, (_) => onSuccess());
+    setIdle();
   }
 }

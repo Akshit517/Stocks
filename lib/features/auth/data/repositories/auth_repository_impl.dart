@@ -50,4 +50,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return result.map((credential) => AppUser.fromFirebase(credential.user!));
   }
+
+  @override
+  Future<Either<Failure, Unit>> signOut() async {
+    try {
+      await remoteDataSource.signOut();
+      return const Right(unit);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
 }

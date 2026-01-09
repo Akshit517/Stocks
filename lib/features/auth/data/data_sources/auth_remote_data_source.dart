@@ -17,6 +17,8 @@ abstract class AuthRemoteDataSource {
     required String verificationId,
     required String smsCode,
   });
+
+  Future<Either<Failure, Unit>> signOut();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -108,6 +110,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
     } catch (e) {
       return left(const ServerFailure(message: 'An unknown error occurred.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> signOut() async {
+    try {
+      await _googleSignIn.signOut();
+      await _firebaseAuth.signOut();
+      return const Right(unit);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 }
