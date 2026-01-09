@@ -13,21 +13,18 @@ class AuthViewModel extends BaseViewModel {
   Failure? get failure => _failure;
   String? get verificationId => _verificationId;
 
-  Future<void> signInWithGoogle() async {
+  Future<void> signInWithGoogle({required Function(AppUser) onSuccess}) async {
     setLoading();
     _failure = null;
-
     final result = await _authRepository.signInWithGoogle();
-
-    result.fold(
-      (failure) => _failure = failure,
-      (user) => _handleSuccess(user),
-    );
-
+    result.fold((failure) => _failure = failure, (user) => onSuccess(user));
     setIdle();
   }
 
-  Future<void> sendOtp(String phone) async {
+  Future<void> sendOtp(
+    String phone, {
+    required Function(String) onSuccess,
+  }) async {
     setLoading();
 
     final result = await _authRepository.startPhoneVerification(
@@ -35,6 +32,7 @@ class AuthViewModel extends BaseViewModel {
       onCodeSent: (id) {
         _verificationId = id;
         setIdle();
+        onSuccess(id);
       },
       onVerificationFailed: (f) {
         _failure = f;
@@ -45,6 +43,4 @@ class AuthViewModel extends BaseViewModel {
     result.mapLeft((f) => _failure = f);
     if (result.isLeft()) setIdle();
   }
-
-  void _handleSuccess(AppUser user) {}
 }

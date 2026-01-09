@@ -28,6 +28,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Either<Failure, UserCredential>> signInWithGoogle() async {
     try {
+      await _googleSignIn.initialize();
       final GoogleSignInAccount? googleUser = await _googleSignIn
           .authenticate();
       if (googleUser == null) {
@@ -64,9 +65,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           await _firebaseAuth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
+          print(e);
           verificationFailed(e);
         },
         codeSent: (String verificationId, int? resendToken) {
+          print("Code Sent");
+          print(verificationId);
           codeSent(verificationId, resendToken);
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
@@ -74,6 +78,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       return right(null);
     } catch (e) {
+      print(e.toString());
       return left(NetworkFailure(message: e.toString()));
     }
   }

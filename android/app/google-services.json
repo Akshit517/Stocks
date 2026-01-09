@@ -12,7 +12,20 @@
           "package_name": "com.example.stocks"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1040082044332-a476gt9sdmggavjikfqodnhmqim5jb2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stocks",
+            "certificate_hash": "d7f1561724ace58ca51b3415ed447b00c91078ab"
+          }
+        },
+        {
+          "client_id": "1040082044332-ijmiaq6a9v1tns7m6crgehl44k4n6797.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAtn5i06XKmduRNwLnhp_J-1KRMsbEl4C4"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040082044332-ijmiaq6a9v1tns7m6crgehl44k4n6797.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1040082044332-jb0oha7tvpr2ld9pauq6cvl1sia3krag.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.stocks"
+              }
+            }
+          ]
         }
       }
     }

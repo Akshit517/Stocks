@@ -14,10 +14,12 @@ class ResponsiveBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: tabletBreakpoint),
-        child: Padding(padding: padding, child: child),
+    return SingleChildScrollView(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: tabletBreakpoint),
+          child: Padding(padding: padding, child: child),
+        ),
       ),
     );
   }
