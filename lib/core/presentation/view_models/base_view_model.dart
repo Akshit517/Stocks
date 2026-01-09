@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'view_state_enum.dart';
-
 abstract class BaseViewModel extends ChangeNotifier {
-  ViewStateEnum _state = ViewStateEnum.idle;
   bool _isDisposed = false;
   bool _isLoading = false;
 
@@ -13,7 +10,6 @@ abstract class BaseViewModel extends ChangeNotifier {
     super.dispose();
   }
 
-  ViewStateEnum get state => _state;
   bool get isBusy => _isLoading;
 
   void reload() {
@@ -28,10 +24,5 @@ abstract class BaseViewModel extends ChangeNotifier {
   void setIdle() {
     _isLoading = false;
     reload();
-  }
-
-  void setViewState(ViewStateEnum viewState) {
-    _state = viewState;
-    notifyListeners();
   }
 }

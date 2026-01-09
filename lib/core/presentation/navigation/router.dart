@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks/features/stocks/presentation/views/stocks_view.dart';
 
 import '../../../features/auth/presentation/views/auth_view.dart';
 import '../../../features/auth/presentation/views/otp_view.dart';
@@ -7,6 +8,7 @@ class RouteNames {
   static const String login = '/';
   static const String otp = '/otp';
   static const String home = '/home';
+  static const String stockdetail = '/home/details';
 }
 
 class AppRouter {
@@ -25,7 +27,11 @@ class AppRouter {
         );
 
       case RouteNames.home:
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        final args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(builder: (_) => StockView(user: args['user']));
+
+      case RouteNames.stockdetail:
+        return MaterialPageRoute(builder: (_) => Placeholder());
 
       default:
         return MaterialPageRoute(

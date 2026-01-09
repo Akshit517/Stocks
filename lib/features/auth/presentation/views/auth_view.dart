@@ -31,9 +31,27 @@ class _AuthViewState extends State<AuthView> {
     super.dispose();
   }
 
+  void _showErrorSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red.shade200,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<AuthViewModel>(
+      onModelReady: (model) {
+        model.addListener(() {
+          if (model.failure != null) {
+            _showErrorSnackBar(context, model.failure!.message);
+            model.clearFailure();
+          }
+        });
+      },
       builder: (BuildContext context, AuthViewModel model, Widget? child) =>
           ResponsiveScaffold(
             title: "SIGN IN",

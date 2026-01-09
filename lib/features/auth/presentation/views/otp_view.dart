@@ -31,9 +31,27 @@ class _OtpViewState extends State<OtpView> {
     super.dispose();
   }
 
+  void _showErrorSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red.shade200,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<AuthViewModel>(
+      onModelReady: (model) {
+        model.addListener(() {
+          if (model.failure != null) {
+            _showErrorSnackBar(context, model.failure!.message);
+            model.clearFailure();
+          }
+        });
+      },
       builder: (BuildContext context, AuthViewModel model, Widget? child) =>
           ResponsiveScaffold(
             title: "Verify OTP",
@@ -90,12 +108,12 @@ class _OtpViewState extends State<OtpView> {
   }
 
   void _onVerify(AuthViewModel model) async {
-    if (_pinputController.text.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter full 6-digit code")),
-      );
-      return;
-    }
+    // if (_pinputController.text.length < 6) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text("Please enter full 6-digit code")),
+    //   );
+    //   return;
+    // }
 
     await model.verifyOtp(
       widget.verificationId,
@@ -104,14 +122,5 @@ class _OtpViewState extends State<OtpView> {
         Navigation().navigateTo(RouteNames.home, arguments: {'user': appUser});
       },
     );
-
-    if (model.failure != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(model.failure!.message),
-          backgroundColor: Colors.red.shade200,
-        ),
-      );
-    }
   }
 }
