@@ -19,6 +19,9 @@ class StockViewModel extends BaseViewModel {
   CompanyDetail? get selectedStockDetail => _selectedStockDetail;
   Failure? get failure => _failure;
 
+  bool _isChartLoading = false;
+  bool get isChartLoading => _isChartLoading;
+
   Future<void> searchStocks(String query) async {
     if (query.isEmpty) {
       _searchResults = [];
@@ -66,16 +69,15 @@ class StockViewModel extends BaseViewModel {
   }
 
   Future<void> updateChartRange(String symbol, String interval) async {
-    setLoading();
-
+    _isChartLoading = true;
+    notifyListeners();
     final result = await _stockRepository.getStockHistory(symbol, interval);
-
     result.fold(
       (failure) => _failure = failure,
       (history) => _stockHistory = history,
     );
-
-    setIdle();
+    _isChartLoading = false;
+    notifyListeners();
   }
 
   void clearSelection() {
