@@ -1,8 +1,12 @@
-# **Market Explorer **
+# **Market Explorer**
 
 An app that help you keep an eye on stocks\! You can check out historical trends with a cool interactive chart and dig into company details.
 
-## ** Getting Started**
+<div align="center">
+  <img src="assets/github/screenshot.png" alt="Screenshots" style="max-width: 100%; height: auto;">
+</div>
+
+## **Getting Started**
 
 ### **1\. Grab an API Key**
 1. Hop over to [RapidAPI](https://rapidapi.com) and create an account.  
