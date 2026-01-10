@@ -84,4 +84,8 @@ class StockViewModel extends BaseViewModel {
     _failure = null;
     notifyListeners();
   }
+
+  void clearFailure() {
+    _failure = null;
+  }
 }

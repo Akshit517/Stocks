@@ -16,13 +16,13 @@ class AuthViewModel extends BaseViewModel {
   String? get verificationId => _verificationId;
 
   Future<void> signInWithGoogle({
-    required Function(AppUser) onSuccess,
+    Function(AppUser)? onSuccess,
     Function(Failure)? onFailure,
   }) async {
     setLoading();
     _failure = null;
     final result = await _authRepository.signInWithGoogle();
-    result.fold((failure) => _failure = failure, (user) => onSuccess(user));
+    result.fold((failure) => _failure = failure, (user) => {});
     setIdle();
   }
 
@@ -52,7 +52,7 @@ class AuthViewModel extends BaseViewModel {
   Future<void> verifyOtp(
     String verificationId,
     String smsCode, {
-    required Function(AppUser) onSuccess,
+    required Function() onSuccess,
   }) async {
     setLoading();
     _failure = null;
@@ -60,7 +60,7 @@ class AuthViewModel extends BaseViewModel {
       verificationId: verificationId,
       smsCode: smsCode,
     );
-    result.fold((failure) => _failure = failure, (user) => onSuccess(user));
+    result.fold((failure) => _failure = failure, (_) => onSuccess());
     setIdle();
   }
 

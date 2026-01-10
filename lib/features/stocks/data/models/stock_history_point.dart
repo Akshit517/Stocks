@@ -15,14 +15,10 @@ class StockHistoryPoint {
     required this.volume,
   });
 
-  factory StockHistoryPoint.fromJson(
-    String timestamp,
-    Map<String, dynamic> json,
-  ) {
+  factory StockHistoryPoint.fromJson(Map<String, dynamic> json) {
+    int timestamp = json['timestamp_unix'];
     return StockHistoryPoint(
-      // Yahoo uses seconds, Flutter needs milliseconds (* 1000)
-      date: DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp) * 1000),
-      // Using .toDouble() ensures we don't get type errors if the API sends an Int
+      date: DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
       open: (json['open'] as num).toDouble(),
       high: (json['high'] as num).toDouble(),
       low: (json['low'] as num).toDouble(),

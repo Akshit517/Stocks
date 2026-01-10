@@ -23,7 +23,7 @@ class StocksApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       title: "Stocks",
-      initialRoute: RouteNames.login,
+      initialRoute: RouteNames.authWrapper,
       debugShowCheckedModeBanner: false,
       navigatorKey: Navigation().navigatorKey,
       onGenerateRoute: AppRouter.generateRoute,

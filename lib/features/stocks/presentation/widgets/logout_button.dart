@@ -13,9 +13,12 @@ class LogoutButton extends StatelessWidget {
         title: const Text("Sign Out"),
         content: const Text("Are you sure you want to log out?"),
         actions: [
-          TextButton(
+          FilledButton.tonal(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child: Text(
+              "Cancel",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ),
           TextButton(
             onPressed: () {
@@ -34,9 +37,7 @@ class LogoutButton extends StatelessWidget {
             },
             child: Text(
               "Logout",
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.error,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
         ],

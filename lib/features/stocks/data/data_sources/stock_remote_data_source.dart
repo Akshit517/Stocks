@@ -77,16 +77,15 @@ class StockRemoteDataSourceImpl implements StockRemoteDataSource {
       if (response.statusCode == 200) {
         print("it fucking worked (HISTORY)");
         final Map<String, dynamic> data = json.decode(response.body);
-        final Map<String, dynamic> items = data['items'] ?? {};
+        List<dynamic> items = data['body'] ?? [];
 
-        final history = items.entries.map((entry) {
-          return StockHistoryPoint.fromJson(entry.key, entry.value);
+        final history = items.map((entry) {
+          return StockHistoryPoint.fromJson(entry as Map<String, dynamic>);
         }).toList();
 
         history.sort((a, b) => a.date.compareTo(b.date));
         return Right(history);
       } else {
-        print("FCUK THID ERORR : HISTORY");
         return Left(ServerFailure());
       }
     } catch (e) {

@@ -12,7 +12,7 @@ class StockSearchResult {
   factory StockSearchResult.fromJson(Map<String, dynamic> json) {
     return StockSearchResult(
       symbol: json['symbol'] ?? '',
-      name: json['name'] ?? '',
+      name: json['shortname'] ?? '',
       exchange: json['exchDisp'] ?? '',
     );
   }

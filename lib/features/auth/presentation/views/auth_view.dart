@@ -104,14 +104,7 @@ class _AuthViewState extends State<AuthView> {
                       iconPath: "assets/icons/g_logo.svg",
                       onPressed: model.isBusy
                           ? null
-                          : () => model.signInWithGoogle(
-                              onSuccess: (appUser) {
-                                Navigation().navigateTo(
-                                  RouteNames.home,
-                                  arguments: {'user': appUser},
-                                );
-                              },
-                            ),
+                          : () => model.signInWithGoogle(),
                     ),
                   ],
                 ),

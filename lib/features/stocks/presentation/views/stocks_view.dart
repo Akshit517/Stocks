@@ -30,6 +30,16 @@ class _StockViewState extends State<StockView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<StockViewModel>(
+      onModelReady: (model) {
+        model.addListener(() {
+          if (model.failure != null && mounted) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(model.failure!.message)));
+            model.clearFailure();
+          }
+        });
+      },
       builder: (context, model, child) => ResponsiveScaffold(
         title: "Market Explorer",
         actions: [LogoutButton()],
@@ -49,29 +59,31 @@ class _StockViewState extends State<StockView> {
                 onSubmitted: (value) => model.searchStocks(value),
               ),
             ),
-
             const SizedBox(height: 20),
+            if (model.isBusy)
+              const Padding(
+                padding: EdgeInsets.only(top: 100),
+                child: Center(child: CircularProgressIndicator()),
+              )
+            else if (model.searchResults.isNotEmpty)
+              _buildSearchResults(model)
+            else
+              _buildEmptyState(),
+          ],
+        ),
+      ),
+    );
+  }
 
-            Stack(
-              children: [
-                if (model.searchResults.isNotEmpty &&
-                    model.selectedStockDetail == null)
-                  _buildSearchResults(model),
-
-                if (model.selectedStockDetail != null)
-                  _buildStockDetails(model),
-
-                if (model.isBusy)
-                  const Center(child: CircularProgressIndicator()),
-
-                if (!model.isBusy &&
-                    model.searchResults.isEmpty &&
-                    model.selectedStockDetail == null)
-                  const Center(
-                    child: Text("Search for a stock to see history"),
-                  ),
-              ],
-            ),
+  Widget _buildEmptyState() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 100),
+      child: Center(
+        child: Column(
+          children: [
+            Icon(Icons.query_stats, size: 64, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            const Text("Search for a stock to see history"),
           ],
         ),
       ),
@@ -81,6 +93,8 @@ class _StockViewState extends State<StockView> {
   Widget _buildSearchResults(StockViewModel model) {
     return ListView.builder(
       itemCount: model.searchResults.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final stock = model.searchResults[index];
         return ListTile(
@@ -88,59 +102,14 @@ class _StockViewState extends State<StockView> {
           subtitle: Text(stock.name),
           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
           onTap: () {
-            // Defaulting to 1-day interval when first selecting
             model.getStockDetails(symbol: stock.symbol, interval: '1d');
+            Navigation().navigateTo(
+              RouteNames.stockdetail,
+              arguments: {'title': stock.symbol},
+            );
           },
         );
       },
-    );
-  }
-
-  Widget _buildStockDetails(StockViewModel model) {
-    final detail = model.selectedStockDetail!;
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                detail.symbol,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => model.clearSelection(),
-              ),
-            ],
-          ),
-          Text("${detail.sector} • ${detail.industry}"),
-          const SizedBox(height: 20),
-
-          // --- CHART AREA ---
-          Container(
-            height: 250,
-            width: double.infinity,
-            color: Colors.grey[200],
-            child: const Center(
-              child: Text("Stock Chart (Use Syncfusion or FlChart here)"),
-            ),
-          ),
-
-          const SizedBox(height: 20),
-          const Text(
-            "About",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Text(detail.description),
-        ],
-      ),
     );
   }
 }

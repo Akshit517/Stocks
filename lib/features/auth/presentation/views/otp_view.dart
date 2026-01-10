@@ -108,18 +108,11 @@ class _OtpViewState extends State<OtpView> {
   }
 
   void _onVerify(AuthViewModel model) async {
-    // if (_pinputController.text.length < 6) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text("Please enter full 6-digit code")),
-    //   );
-    //   return;
-    // }
-
     await model.verifyOtp(
       widget.verificationId,
       _pinputController.text,
-      onSuccess: (appUser) {
-        Navigation().navigateTo(RouteNames.home, arguments: {'user': appUser});
+      onSuccess: () {
+        Navigation().goBack();
       },
     );
   }

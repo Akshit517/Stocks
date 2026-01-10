@@ -14,14 +14,12 @@ class CompanyDetail {
   });
 
   factory CompanyDetail.fromJson(String symbol, Map<String, dynamic> json) {
-    final profile = json['assetProfile'] ?? {};
     return CompanyDetail(
       symbol: symbol,
-      description:
-          profile['longBusinessSummary'] ?? 'No description available.',
-      sector: profile['sector'] ?? 'N/A',
-      industry: profile['industry'] ?? 'N/A',
-      website: profile['website'] ?? 'N/A',
+      description: json['longBusinessSummary'] ?? 'No description available.',
+      sector: json['sector'] ?? 'N/A',
+      industry: json['industry'] ?? 'N/A',
+      website: json['website'] ?? 'N/A',
     );
   }
 }

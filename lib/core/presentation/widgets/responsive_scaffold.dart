@@ -25,10 +25,7 @@ class ResponsiveScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget body = ResponsiveBody(child: content);
     if (isScrollable) {
-      body = SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: body,
-      );
+      body = content;
     }
 
     return Scaffold(

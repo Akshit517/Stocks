@@ -27,7 +27,9 @@ void setupLocator() {
   locator.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
   // Stocks
-  locator.registerFactory<StockViewModel>(() => StockViewModel(locator()));
+  locator.registerLazySingleton<StockViewModel>(
+    () => StockViewModel(locator()),
+  );
 
   locator.registerLazySingleton<StockRepository>(
     () => StockRepositoryImpl(remoteDataSource: locator()),
