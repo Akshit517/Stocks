@@ -38,7 +38,7 @@ class AppRouter {
       case RouteNames.stockdetail:
         final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-          builder: (_) => StocksDetailView(title: args['title']),
+          builder: (_) => StocksDetailView(symbol: args['title']),
         );
 
       default:

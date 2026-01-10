@@ -62,7 +62,7 @@ class _StockViewState extends State<StockView> {
             const SizedBox(height: 20),
             if (model.isBusy)
               const Padding(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 128),
                 child: Center(child: CircularProgressIndicator()),
               )
             else if (model.searchResults.isNotEmpty)
@@ -102,7 +102,6 @@ class _StockViewState extends State<StockView> {
           subtitle: Text(stock.name),
           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
           onTap: () {
-            model.getStockDetails(symbol: stock.symbol, interval: '1d');
             Navigation().navigateTo(
               RouteNames.stockdetail,
               arguments: {'title': stock.symbol},

@@ -44,7 +44,6 @@ class StockRemoteDataSourceImpl implements StockRemoteDataSource {
       final response = await client.get(url, headers: _headers);
       print(response.body);
       if (response.statusCode == 200) {
-        print("it fucking worked (SEARCH)");
         final Map<String, dynamic> data = json.decode(response.body);
         final List body = data['body'] ?? [];
         return Right(
@@ -69,7 +68,7 @@ class StockRemoteDataSourceImpl implements StockRemoteDataSource {
       final url = Uri.https(baseUrl, "/api/v2/markets/stock/history", {
         "symbol": symbol,
         "interval": interval,
-        "limit": "500",
+        "limit": "100",
       });
 
       final response = await client.get(url, headers: _headers);
