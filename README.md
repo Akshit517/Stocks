@@ -1,16 +1,25 @@
-# stocks
+# **Market Explorer **
 
-A new Flutter project.
+An app that help you keep an eye on stocks\! You can check out historical trends with a cool interactive chart and dig into company details.
 
-## Getting Started
+## ** Getting Started**
 
-This project is a starting point for a Flutter application.
+### **1\. Grab an API Key**
+1. Hop over to [RapidAPI](https://rapidapi.com) and create an account.  
+2. Sign up for the free tier of the [Yahoo Finance API by Sparior](https://rapidapi.com/sparior/api/yahoo-finance15).  
+3. Get your X-RapidAPI-Key from the Endpoints tab.
 
-A few resources to get you started if this is your first Flutter project:
+### **2\. Set Up Your Environment**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Make a new file called .env in the root folder of the project and paste your key in there like this: 
+ ```bash
+RAPID\_API\_KEY=your\_copied\_api\_key\_here
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### **3\. Run the App**
+
+Fire up your terminal in the project folder and run these commands to get moving:  
+```bash
+flutter pub get  
+flutter run
+```
